@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: CRUD
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/xyz_db?serverTimezone=Asia/Kolkata
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      ddl-show: true
+
+server:
+  port: 8080
+
+
