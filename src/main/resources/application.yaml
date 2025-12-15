@@ -1,18 +1,33 @@
 spring:
   application:
-    name: CRUD
+    name: CRUD-user-service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/xyz_db?serverTimezone=Asia/Kolkata
-    username: root
-    password: 1234
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useSSL=true&requireSSL=true&verifyServerCertificate=false&serverTimezone=Asia/Kolkata
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
       ddl-show: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 server:
-  port: 8080
+  port: 8081
+  error:
+    include-message: always
+    include-binding-errors: always
 
+logging:
+  pattern:
+#    console: "%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg [${spring.application.name}]%n"
+
+jwt:
+  secret:
+    key: "E9bEr9zPAmGk9t99QT/Uj8f5l1a0p4yT7Nw9TtUqCqk="
+  expiration: 3600000  # 1 hour in milliseconds
 

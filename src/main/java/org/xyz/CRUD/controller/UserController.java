@@ -1,7 +1,9 @@
 package org.xyz.CRUD.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.xyz.CRUD.entity.User;
+import org.xyz.CRUD.dto.UserRequestDto;
+import org.xyz.CRUD.dto.UserResponseDto;
 import org.xyz.CRUD.service.UserService;
 
 @RestController
@@ -14,24 +16,31 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("get/{id}")
-    public User getUser(@PathVariable Long id) {
+
+    @GetMapping("{id}")
+    public UserResponseDto getUser(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    @PostMapping("create")
-    public User create(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping("register")
+    public ResponseEntity<?> createUser(@RequestBody UserRequestDto request) {
+        try {
+            userService.createUser(request);
+            return ResponseEntity.ok("user created");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error while creating user: " + e.getMessage());
+        }
     }
 
-    @PutMapping("update/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+
+    @PutMapping("{id}")
+    public UserResponseDto updateUser(@PathVariable Long id, @RequestBody UserRequestDto userRequestDto) {
+        return userService.updateUser(id, userRequestDto);
     }
 
-    @DeleteMapping("delete/{id}")
-    public User delete(@PathVariable Long id) {
+
+    @DeleteMapping("{id}")
+    public UserResponseDto deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }
-
 }
